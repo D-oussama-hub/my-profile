@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio — Daboub Oussama</title>
+  <meta name="description" content="Portfolio professionnel de Daboub Oussama — Développeur Web Full-Stack / Software Engineer" />
+  <link rel="icon" href="https://th.bing.com/th/id/R.0ff3a2ffa356ae7f39351532f8d403b4?rik=77X4MVrMCzcUEw&pid=ImgRaw&r=0" />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+  <style>
+    :root { --bg: #0f1226; --bg-soft: #131735; --card: #181c3f; --text: #e6e8f0; --muted: #a8b0d3; --primary: #7c5cff; --accent: #00e4ff; --ok: #2fee9c; --danger: #ff5c8a; --shadow: 0 10px 30px rgba(0,0,0,.35); --radius: 18px; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; background: radial-gradient(  rgba(124,92,255,.25), transparent 60%), radial-gradient( rgba(0,228,255,.25), transparent 60%), var(--bg); color: var(--text); overflow-x: hidden; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+    header { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px); background: linear-gradient( to bottom, rgba(15,18,38,.85), rgba(15,18,38,.35) ); border-bottom: 1px solid rgba(124,92,255,.15); }
+    .brand { display:flex; align-items:center; gap:.7rem; font-weight:700; letter-spacing:.3px; }
+    .brand .dot { width:10px; height:10px; border-radius:50%; background:var(--ok); box-shadow:0 0 18px var(--ok); }
+    nav { display:flex; align-items:center; justify-content:space-between; padding: .8rem 0; }
+    .nav-links { display:flex; gap:1rem; flex-wrap:wrap; }
+    .btn { border: 1px solid rgba(124,92,255,.35); background: linear-gradient(180deg, rgba(124,92,255,.15), rgba(0,0,0,.1)); color: var(--text); padding: .55rem .9rem; border-radius: 999px; cursor: pointer; transition: .2s transform, .2s border-color; display: inline-flex; align-items: center; gap: .4rem; }
+    .btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+    .hero { display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center; padding: 4rem 0 3rem; }
+    @media (max-width: 900px){ .hero { grid-template-columns:1fr; padding: 2.5rem 0 1rem; } }
+    .title { font-size: clamp(1.8rem, 2.6vw + 1rem, 3rem); line-height:1.1; margin:0 0 .6rem; }
+    .subtitle { color: var(--muted); font-size: 1.1rem; line-height: 1.4; }
+    .card { background: linear-gradient(180deg, rgba(24,28,63,.8), rgba(24,28,63,.55)); border:1px solid rgba(124,92,255,.25); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .flip { perspective: 1200px; width: 100%; max-width: 360px; margin-inline: auto; }
+    .flip-inner { position: relative; width: 100%; padding-top: 110%; transform-style: preserve-3d; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+    .flip:hover .flip-inner, .flip:focus-within .flip-inner, .flip.toggled .flip-inner { transform: rotateY(180deg); }
+    .flip-face { position:absolute; inset:0; border-radius: var(--radius); overflow:hidden; backface-visibility:hidden; display:grid; place-items:center; background: #0e1127; border:1px solid rgba(124,92,255,.25); }
+    .flip-face.back { transform: rotateY(180deg); background: linear-gradient(180deg,#12163a,#0f132e); }
+    .avatar { width:100%; height:100%; object-fit: cover; filter: saturate(1.05) contrast(1.03); }
+    .flip-info { padding: 1rem; text-align:center; color: var(--muted); }
+    .heroCard { padding: 1.2rem; display:grid; gap:1rem; }
+    section { padding: 2.2rem 0; }
+    .section-title { font-size:1.5rem; margin:0 0 1rem; }
+    
+    /* Tags and Grid Styling */
+    .skills-grid { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+    .tag { background: rgba(124,92,255,.2); border: 1px solid rgba(124,92,255,.4); padding: .35rem .75rem; border-radius: 8px; font-size: .9rem; color: var(--accent); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+    .project-card { padding: 1.2rem; display: flex; flex-direction: column; justify-space-between; }
+    .chipbar { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
+    .chip { display: inline-flex; align-items: center; gap: .4rem; background: rgba(255,255,255,.05); padding: .4rem .8rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.1); }
+    .chip img { width: 20px; height: 20px; }
+
+    footer { padding:2rem 0 3rem; color: var(--muted); }
+    .glow { position:relative; }
+    .glow::after { content: ""; position:absolute; inset: -2px; border-radius: inherit; background: conic-gradient(from 180deg, rgba(124,92,255,.35), rgba(0,228,255,.35), transparent 60%); filter: blur(18px); z-index:-1; }
+    .floaty { position:absolute; width:160px; height:160px; border-radius:50%; mix-blend-mode: screen; opacity:.25; filter: blur(24px); animation: drift 18s infinite linear; }
+    .floaty.one { background: #7c5cff; top: -20px; left: -30px; }
+    .floaty.two { background: #00e4ff; bottom: -40px; right: -40px; animation-duration: 22s; }
+    @keyframes drift { from{ transform: translate(0,0) rotate(0deg);} 50%{ transform: translate(20px, -10px) rotate(120deg);} to{ transform: translate(0,0) rotate(360deg);} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand"><span class="dot"></span> Daboub Oussama · Portfolio</div>
+        <div class="nav-links">
+          <a href="#apropos">À propos</a>
+          <a href="#skills">Compétences</a>
+          <a href="#projets">Projets</a>
+          <a href="#github">GitHub</a>
+          <a href="#contact">Contact</a>
+          <button class="btn" id="toggleAccent">Mode accent</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1 class="title">Bonjour, je suis <span class="glow" style="padding: .1rem .4rem; border-radius:.6rem;">Daboub Oussama</span> 👋</h1>
+        <p class="subtitle">Étudiant en Informatique à l'USTHB | Junior Software Engineer & Full-Stack Web Developer</p>
+        <div style="margin-top:1.2rem; display:flex; gap:.7rem; flex-wrap:wrap;">
+          <a class="btn" href="#contact">Me contacter</a>
+          <a class="btn" href="https://github.com/D-oussama-hub" target="_blank">GitHub</a>
+        </div>
+      </div>
+
+      <aside class="card heroCard">
+        <div class="flip" id="flip">
+          <div class="flip-inner">
+            <figure class="flip-face front">
+              <img class="avatar" src="Screenshot_20250820_114901.jpg" alt="Photo de Daboub Oussama" />
+              <div class="floaty one"></div>
+              <div class="floaty two"></div>
+            </figure>
+            <div class="flip-face back">
+              <div class="flip-info">
+                <h3>Daboub Oussama</h3>
+                <p>USTHB Student & Developer</p>
+                <button class="btn" id="flipBack">Retourner</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="apropos">
+      <h2 class="section-title">À propos</h2>
+      <div class="card" style="padding:1.2rem; line-height:1.6">
+        <p>I'm Daboub Oussama, a Software Engineering student at Houari-Boumediene University of Science and Technology (USTHB). I have a strong computer science foundation in algorithms, low-level programming (C), and Object-Oriented Programming (Java).</p>
+        <p>I build modern web applications using Node.js, PHP, MySQL, and frontend technologies (HTML/CSS/JS). Passionate about writing clean code, solving complex problems, and continuously building practical projects.</p>   
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="section-title">Compétences Techniques</h2>
+      <div class="card" style="padding:1.2rem;">
+        <p style="margin-top:0; color:var(--muted)">Languages & Core Concepts:</p>
+        <div class="skills-grid">
+          <span class="tag">Java</span>
+          <span class="tag">C</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">PHP</span>
+          <span class="tag">OOP (Object-Oriented Programming)</span>
+          <span class="tag">Algorithms & Problem Solving</span>
+        </div>
+        <p style="margin-top:1.2rem; color:var(--muted)">Web & Backend Technologies:</p>
+        <div class="skills-grid">
+          <span class="tag">Node.js</span>
+          <span class="tag">Express.js</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">HTML5 / CSS3</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">Git & GitHub</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projets">
+      <h2 class="section-title">Projets Réalisés</h2>
+      <div class="projects-grid">
+
+        <!-- Project 1: Showroom Cars -->
+        <div class="card project-card">
+          <h3>Car Showroom Management System</h3>
+          <p style="color:var(--muted); font-size:.95rem;">Desktop application simulating a car showroom, applying Object-Oriented Programming (OOP) concepts such as inheritance, encapsulation, and class hierarchies.</p>
+          <div class="skills-grid" style="margin-bottom:1rem;">
+            <span class="tag">Java</span>
+            <span class="tag">OOP</span>
+          </div>
+          <a class="btn" href="https://github.com/D-oussama-hub/Car_Showroom_project" target="_blank">Voir sur GitHub</a>
+        </div>
+        
+        <!-- Project 2: Calculator -->
+        <div class="card project-card">
+          <h3>Web-Based Calculator Application</h3>
+          <p style="color:var(--muted); font-size:.95rem;">Interactive calculator built with a responsive user interface and backend logic integration for processing mathematical operations.</p>
+          <div class="skills-grid" style="margin-bottom:1rem;">
+            <span class="tag">PHP</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">HTML5 / CSS3</span>
+          </div>
+          <a class="btn" href="https://github.com/D-oussama-hub/calculatrice-web" target="_blank">Voir sur GitHub</a>
+        </div>
+
+        <!-- Project 3: Trans Device -->
+        <div class="card project-card">
+          <h3>Trans Device Web Platform</h3>
+          <p style="color:var(--muted); font-size:.95rem;">Web application for managing device translation and transport data, featuring API integration for real-time data processing and server-side PHP logic.</p>
+          <div class="skills-grid" style="margin-bottom:1rem;">
+            <span class="tag">PHP</span>
+            <span class="tag">HTML5 / CSS3</span>
+          </div>
+          <a class="btn" href="https://github.com/D-oussama-hub/Trans_devise" target="_blank">Voir sur GitHub</a>
+        </div>
+
+        <!-- Project 4: Puzzle Game -->
+        <div class="card project-card">
+          <h3>JavaFX Puzzle Game</h3>
+          <p style="color:var(--muted); font-size:.95rem;">Interactive graphical puzzle game featuring custom event handling, UI state management, and game logic built with JavaFX.</p>
+          <div class="skills-grid" style="margin-bottom:1rem;">
+            <span class="tag">Java</span>
+            <span class="tag">JavaFX</span>
+          </div>
+          <a class="btn" href="https://github.com/D-oussama-hub/puzzel_game" target="_blank">Voir sur GitHub</a>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="github">
+      <h2 class="section-title">Mon GitHub</h2>
+      <div class="card" style="padding:1rem; text-align:center;">
+        <p>Découvrez mes projets et mon code source sur GitHub :</p>
+        <a class="btn" href="https://github.com/D-oussama-hub" target="_blank">Visiter mon GitHub</a>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="card" style="padding:1rem; line-height:1.6; text-align:center;">
+        <p>Vous pouvez me contacter par email : <a href="mailto:oussamadeboub3030@gmail.com"><img src="https://img.icons8.com/color/48/000000/gmail-new.png" alt="Gmail" style="vertical-align:middle; width:24px;"> oussamadeboub3030@gmail.com</a></p>
+        <div class="chipbar" style="margin-top:1rem;">
+          <span class="chip"><a href="https://github.com/D-oussama-hub" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/github.png" alt="GitHub"> GitHub</a></span>
+          <span class="chip"><a href="https://discord.gg/yuvKgzVx" target="_blank"><img src="https://img.icons8.com/color/48/000000/discord-logo.png" alt="Discord"> Discord</a></span>
+          <span class="chip"><a href="https://www.instagram.com/____.osama.__?igsh=MTQ2eGVqNm51OGtnaQ==" target="_blank"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram"> Instagram</a></span>
+          <span class="chip"><a target="_blank">Telegram and whatsApp: 0552635810</a></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div class="card" style="padding:1rem; text-align:center;">
+      © <span id="year"></span> Daboub Oussama — Portfolio. Construit avec HTML • CSS • JavaScript • React.
+    </div>
+  </footer>
+
+  <script type="text/babel">
+    const { useEffect, useState } = React;
+    function App(){
+      const [accent, setAccent] = useState(false);
+      useEffect(() => {
+        const year = document.getElementById('year');
+        if (year) year.textContent = new Date().getFullYear();
+        const btn = document.getElementById('toggleAccent');
+        const onClick = () => setAccent(v => !v);
+        btn.addEventListener('click', onClick);
+        return () => btn.removeEventListener('click', onClick);
+      }, []);
+      useEffect(() => {
+        document.documentElement.style.setProperty('--primary', accent ? '#a78bfa' : '#7c5cff');
+        document.documentElement.style.setProperty('--accent', accent ? '#4adeff' : '#00e4ff');
+      }, [accent]);
+      return <></>;
+    }
+    ReactDOM.createRoot(document.createElement('div')).render(<App />);
+
+    const flip = document.getElementById('flip');
+    const flipBack = document.getElementById('flipBack');
+    flip.addEventListener('click', e => {
+      if (e.target.closest('#flipBack')) return;
+      flip.classList.toggle('toggled');
+    });
+    flipBack.addEventListener('click', () => flip.classList.remove('toggled'));
+  </script>
+</body>
+</html>
