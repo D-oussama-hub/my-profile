@@ -11,10 +11,22 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
   <style>
-    :root { --bg: #0f1226; --bg-soft: #131735; --card: #181c3f; --text: #e6e8f0; --muted: #a8b0d3; --primary: #7c5cff; --accent: #00e4ff; --ok: #2fee9c; --danger: #ff5c8a; --shadow: 0 10px 30px rgba(0,0,0,.35); --radius: 18px; }
+    :root { 
+      --bg: #0f1226; 
+      --bg-soft: #131735; 
+      --card: #181c3f; 
+      --text: #e6e8f0; 
+      --muted: #a8b0d3; 
+      --primary: #7c5cff; 
+      --accent: #00e4ff; 
+      --ok: #2fee9c; 
+      --danger: #ff5c8a; 
+      --shadow: 0 10px 30px rgba(0,0,0,.35); 
+      --radius: 18px; 
+    }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
-    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; background: radial-gradient(  rgba(124,92,255,.25), transparent 60%), radial-gradient( rgba(0,228,255,.25), transparent 60%), var(--bg); color: var(--text); overflow-x: hidden; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; background: radial-gradient(rgba(124,92,255,.25), transparent 60%), radial-gradient(rgba(0,228,255,.25), transparent 60%), var(--bg); color: var(--text); overflow-x: hidden; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
     .container { width: min(1100px, 92%); margin: 0 auto; }
@@ -25,19 +37,36 @@
     .nav-links { display:flex; gap:1rem; flex-wrap:wrap; }
     .btn { border: 1px solid rgba(124,92,255,.35); background: linear-gradient(180deg, rgba(124,92,255,.15), rgba(0,0,0,.1)); color: var(--text); padding: .55rem .9rem; border-radius: 999px; cursor: pointer; transition: .2s transform, .2s border-color; display: inline-flex; align-items: center; gap: .4rem; }
     .btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+    
     .hero { display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center; padding: 4rem 0 3rem; }
     @media (max-width: 900px){ .hero { grid-template-columns:1fr; padding: 2.5rem 0 1rem; } }
     .title { font-size: clamp(1.8rem, 2.6vw + 1rem, 3rem); line-height:1.1; margin:0 0 .6rem; }
     .subtitle { color: var(--muted); font-size: 1.1rem; line-height: 1.4; }
+    
     .card { background: linear-gradient(180deg, rgba(24,28,63,.8), rgba(24,28,63,.55)); border:1px solid rgba(124,92,255,.25); border-radius: var(--radius); box-shadow: var(--shadow); }
-    .flip { perspective: 1200px; width: 100%; max-width: 360px; margin-inline: auto; }
-    .flip-inner { position: relative; width: 100%; padding-top: 110%; transform-style: preserve-3d; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
-    .flip:hover .flip-inner, .flip:focus-within .flip-inner, .flip.toggled .flip-inner { transform: rotateY(180deg); }
-    .flip-face { position:absolute; inset:0; border-radius: var(--radius); overflow:hidden; backface-visibility:hidden; display:grid; place-items:center; background: #0e1127; border:1px solid rgba(124,92,255,.25); }
-    .flip-face.back { transform: rotateY(180deg); background: linear-gradient(180deg,#12163a,#0f132e); }
-    .avatar { width:100%; height:100%; object-fit: cover; filter: saturate(1.05) contrast(1.03); }
-    .flip-info { padding: 1rem; text-align:center; color: var(--muted); }
-    .heroCard { padding: 1.2rem; display:grid; gap:1rem; }
+    
+  
+    .profile-card { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding: 0;               
+  max-width: 350px;
+  width: 350px ;
+  height: 350px; 
+  margin: 0 auto;
+  overflow: hidden;          
+  border-radius: var(--radius);
+}
+
+.profile-img { 
+  width: 220px; 
+  height: 280px; 
+  object-fit: cover; 
+  transform: scale(1.08);    
+  border: none;              
+}
+
     section { padding: 2.2rem 0; }
     .section-title { font-size:1.5rem; margin:0 0 1rem; }
     
@@ -45,7 +74,7 @@
     .skills-grid { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
     .tag { background: rgba(124,92,255,.2); border: 1px solid rgba(124,92,255,.4); padding: .35rem .75rem; border-radius: 8px; font-size: .9rem; color: var(--accent); }
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
-    .project-card { padding: 1.2rem; display: flex; flex-direction: column; justify-space-between; }
+    .project-card { padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; }
     .chipbar { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
     .chip { display: inline-flex; align-items: center; gap: .4rem; background: rgba(255,255,255,.05); padding: .4rem .8rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.1); }
     .chip img { width: 20px; height: 20px; }
@@ -53,10 +82,6 @@
     footer { padding:2rem 0 3rem; color: var(--muted); }
     .glow { position:relative; }
     .glow::after { content: ""; position:absolute; inset: -2px; border-radius: inherit; background: conic-gradient(from 180deg, rgba(124,92,255,.35), rgba(0,228,255,.35), transparent 60%); filter: blur(18px); z-index:-1; }
-    .floaty { position:absolute; width:160px; height:160px; border-radius:50%; mix-blend-mode: screen; opacity:.25; filter: blur(24px); animation: drift 18s infinite linear; }
-    .floaty.one { background: #7c5cff; top: -20px; left: -30px; }
-    .floaty.two { background: #00e4ff; bottom: -40px; right: -40px; animation-duration: 22s; }
-    @keyframes drift { from{ transform: translate(0,0) rotate(0deg);} 50%{ transform: translate(20px, -10px) rotate(120deg);} to{ transform: translate(0,0) rotate(360deg);} }
   </style>
 </head>
 <body>
@@ -79,39 +104,29 @@
   <main class="container">
     <section class="hero">
       <div>
-        <h1 class="title">Bonjour, je suis <span class="glow" style="padding: .1rem .4rem; border-radius:.6rem;">Daboub Oussama</span> 👋</h1>
-        <p class="subtitle">Étudiant en Informatique à l'USTHB | Junior Software Engineer & Full-Stack Web Developer</p>
+        <h1 class="title">Welcome, I am <span class="glow" style="padding: .1rem .4rem; border-radius:.6rem;">Daboub Oussama</span> 👋</h1>
+        <p class="subtitle">Computer Science Graduate from USTHB | Junior Software Engineer & Full-Stack Web Developer</p>
         <div style="margin-top:1.2rem; display:flex; gap:.7rem; flex-wrap:wrap;">
-          <a class="btn" href="#contact">Me contacter</a>
+          <a class="btn" href="#contact">Contact me</a>
           <a class="btn" href="https://github.com/D-oussama-hub" target="_blank">GitHub</a>
         </div>
       </div>
 
-      <aside class="card heroCard">
-        <div class="flip" id="flip">
-          <div class="flip-inner">
-            <figure class="flip-face front">
-              <img class="avatar" src="Screenshot_20250820_114901.jpg" alt="Photo de Daboub Oussama" />
-              <div class="floaty one"></div>
-              <div class="floaty two"></div>
-            </figure>
-            <div class="flip-face back">
-              <div class="flip-info">
-                <h3>Daboub Oussama</h3>
-                <p>USTHB Student & Developer</p>
-                <button class="btn" id="flipBack">Retourner</button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Simple Profile Photo Container -->
+      <aside class="card profile-card">
+        <img class="profile-img" src="Screenshot_20250820_114901.jpg" alt="Photo de Daboub Oussama" />
       </aside>
     </section>
 
     <section id="apropos">
       <h2 class="section-title">À propos</h2>
       <div class="card" style="padding:1.2rem; line-height:1.6">
-        <p>I'm Daboub Oussama, a Software Engineering student at Houari-Boumediene University of Science and Technology (USTHB). I have a strong computer science foundation in algorithms, low-level programming (C), and Object-Oriented Programming (Java).</p>
-        <p>I build modern web applications using Node.js, PHP, MySQL, and frontend technologies (HTML/CSS/JS). Passionate about writing clean code, solving complex problems, and continuously building practical projects.</p>   
+        <p>
+          I recently graduated with a Bachelor's (Licence) degree in Software Engineering from USTHB. My journey in tech started with getting my hands dirty with computer science fundamentals from low-level C programming and algorithms to Object-Oriented design in Java.
+        </p>
+        <p style="margin-bottom:0;">
+          Lately, I’ve been focusing on full-stack web development, building projects with Node.js, PHP, MySQL, and JavaScript. I don't claim to know everything, but I genuinely love learning by doing. Right now, I'm focused on sharpening my skills, exploring modern frameworks, and writing clean code through real personal projects.
+        </p>   
       </div>
     </section>
 
@@ -207,7 +222,7 @@
           <span class="chip"><a href="https://github.com/D-oussama-hub" target="_blank"><img src="https://img.icons8.com/fluent/48/000000/github.png" alt="GitHub"> GitHub</a></span>
           <span class="chip"><a href="https://discord.gg/yuvKgzVx" target="_blank"><img src="https://img.icons8.com/color/48/000000/discord-logo.png" alt="Discord"> Discord</a></span>
           <span class="chip"><a href="https://www.instagram.com/____.osama.__?igsh=MTQ2eGVqNm51OGtnaQ==" target="_blank"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram"> Instagram</a></span>
-          <span class="chip"><a target="_blank">Telegram and whatsApp: 0552635810</a></span>
+          <span class="chip"><a target="_blank">Telegram and WhatsApp: 0552635810</a></span>
         </div>
       </div>
     </section>
@@ -238,14 +253,6 @@
       return <></>;
     }
     ReactDOM.createRoot(document.createElement('div')).render(<App />);
-
-    const flip = document.getElementById('flip');
-    const flipBack = document.getElementById('flipBack');
-    flip.addEventListener('click', e => {
-      if (e.target.closest('#flipBack')) return;
-      flip.classList.toggle('toggled');
-    });
-    flipBack.addEventListener('click', () => flip.classList.remove('toggled'));
   </script>
 </body>
 </html>
