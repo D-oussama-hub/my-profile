@@ -1,2 +1,2 @@
 [build]
-  publish = "my_web_profile"
+  publish = "."
